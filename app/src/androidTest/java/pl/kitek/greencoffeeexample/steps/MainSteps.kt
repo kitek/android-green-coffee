@@ -2,6 +2,7 @@ package pl.kitek.greencoffeeexample.steps
 
 import android.content.Intent
 import android.support.test.rule.ActivityTestRule
+import android.view.WindowManager
 import com.mauriciotogneri.greencoffee.GreenCoffeeSteps
 import com.mauriciotogneri.greencoffee.annotations.Given
 import com.mauriciotogneri.greencoffee.annotations.Then
@@ -22,6 +23,11 @@ class MainSteps(val component: TestComponentRule,
     @When("^the app has launched$")
     fun whenTheAppHasLaunched() {
         main.launchActivity(Intent())
+        main.activity.runOnUiThread({
+            main.activity.window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        })
     }
 
     @Then("^I should see message: \"([^\"]*)\"$")
